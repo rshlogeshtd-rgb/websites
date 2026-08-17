@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Smart Student Grade Calculator</title>
+<title>Smart Supermarket Billing System</title>
 <style>
 * {
     margin: 0;
@@ -13,428 +13,495 @@
 body {
     font-family: "Segoe UI", Arial, sans-serif;
     min-height: 100vh;
-    background: linear-gradient(135deg, #141e30, #243b55);
-    color: #fff;
-    overflow-x: hidden;
+    background: #f4f7ee;
+    color: #263238;
 }
-body::before {
-    content: "";
-    position: fixed;
-    width: 350px;
-    height: 350px;
-    background: #00e5ff;
-    border-radius: 50%;
-    filter: blur(100px);
-    opacity: 0.25;
-    top: -100px;
-    left: -100px;
-    animation: float 6s infinite alternate;
+header {
+    background: linear-gradient(135deg, #1b5e20, #43a047);
+    color: white;
+    padding: 22px 7%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
 }
-body::after {
-    content: "";
-    position: fixed;
-    width: 300px;
-    height: 300px;
-    background: #ff00cc;
-    border-radius: 50%;
-    filter: blur(100px);
-    opacity: 0.2;
-    bottom: -100px;
-    right: -80px;
-    animation: float 7s infinite alternate-reverse;
+.logo {
+    font-size: 28px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+.logo span {
+    color: #ffca28;
+}
+.tagline {
+    font-size: 14px;
+    color: #e8f5e9;
 }
 .container {
-    width: 92%;
+    width: 90%;
     max-width: 1100px;
     margin: 40px auto;
-    position: relative;
-    z-index: 1;
 }
-.header {
+.title {
     text-align: center;
-    margin-bottom: 30px;
+    margin-bottom: 35px;
 }
-.header h1 {
-    font-size: 42px;
-    letter-spacing: 2px;
-    text-shadow: 0 5px 15px rgba(0,0,0,0.4);
+.title h1 {
+    font-size: 38px;
+    color: #1b5e20;
 }
-.header p {
+.title p {
     margin-top: 8px;
-    color: #cfd8dc;
-    font-size: 17px;
+    color: #607d8b;
 }
-.main-box {
+.billing-layout {
     display: grid;
-    grid-template-columns: 1.2fr 0.8fr;
-    gap: 25px;
+    grid-template-columns: 1.4fr 0.8fr;
+    gap: 30px;
 }
 .card {
-    background: rgba(255,255,255,0.12);
-    border: 1px solid rgba(255,255,255,0.25);
-    border-radius: 25px;
+    background: white;
+    border-radius: 20px;
     padding: 30px;
-    backdrop-filter: blur(15px);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    border: 1px solid #e0e0e0;
 }
-.card h2 {
+.card-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
     margin-bottom: 25px;
-    font-size: 25px;
+    color: #1b5e20;
+    font-size: 23px;
 }
-.subject-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 18px;
-}
-.subject {
-    position: relative;
-}
-.subject label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: bold;
-    color: #e0f7fa;
-}
-.subject input {
-    width: 100%;
-    padding: 14px;
-    border: 2px solid transparent;
-    border-radius: 12px;
-    outline: none;
-    background: rgba(255,255,255,0.9);
-    color: #222;
-    font-size: 16px;
+.product {
+    background: #fafdf7;
+    border: 2px solid #e8f5e9;
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 18px;
     transition: 0.3s;
 }
-.subject input:focus {
-    border-color: #00e5ff;
-    box-shadow: 0 0 15px rgba(0,229,255,0.4);
-    transform: translateY(-2px);
+.product:hover {
+    border-color: #66bb6a;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 18px rgba(67,160,71,0.12);
 }
-.buttons {
+.product-heading {
     display: flex;
-    gap: 15px;
-    margin-top: 25px;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
 }
-button {
-    flex: 1;
-    padding: 14px;
+.product-heading h3 {
+    color: #2e7d32;
+}
+.product-number {
+    background: #ffca28;
+    color: #263238;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+.input-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+.input-box label {
+    display: block;
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 7px;
+    color: #546e7a;
+}
+.input-box input {
+    width: 100%;
+    padding: 13px;
+    border: 2px solid #dcedc8;
+    border-radius: 10px;
+    outline: none;
+    font-size: 16px;
+    background: white;
+    transition: 0.3s;
+}
+.input-box input:focus {
+    border-color: #43a047;
+    box-shadow: 0 0 8px rgba(67,160,71,0.2);
+}
+.calculate-btn {
+    width: 100%;
+    padding: 16px;
+    margin-top: 10px;
     border: none;
     border-radius: 12px;
+    background: linear-gradient(135deg, #2e7d32, #66bb6a);
+    color: white;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.calculate-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 18px rgba(46,125,50,0.3);
+}
+.reset-btn {
+    width: 100%;
+    padding: 13px;
+    margin-top: 10px;
+    border: 2px solid #ffca28;
+    border-radius: 12px;
+    background: #fffde7;
+    color: #795548;
     font-size: 16px;
     font-weight: bold;
     cursor: pointer;
     transition: 0.3s;
 }
-.calculate {
-    background: linear-gradient(135deg, #00c6ff, #0072ff);
+.reset-btn:hover {
+    background: #ffca28;
+}
+.summary {
+    background: linear-gradient(145deg, #1b5e20, #2e7d32);
     color: white;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(27,94,32,0.2);
+    height: fit-content;
+    position: sticky;
+    top: 20px;
 }
-.reset {
-    background: rgba(255,255,255,0.15);
-    color: white;
-    border: 1px solid rgba(255,255,255,0.3);
-}
-button:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-}
-.result-card {
+.summary h2 {
     text-align: center;
+    margin-bottom: 25px;
+    font-size: 25px;
 }
-.result-circle {
-    width: 150px;
-    height: 150px;
-    margin: 10px auto 25px;
+.bill-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 20px;
+    background: #ffca28;
+    color: #263238;
     border-radius: 50%;
-    background: conic-gradient(#00e5ff 0deg, rgba(255,255,255,0.1) 0deg);
     display: flex;
     align-items: center;
     justify-content: center;
-    position: relative;
+    font-size: 38px;
+    animation: bounce 2s infinite;
 }
-.result-circle::before {
-    content: "";
-    position: absolute;
-    width: 120px;
-    height: 120px;
-    background: #1d3048;
-    border-radius: 50%;
-}
-.average {
-    position: relative;
-    z-index: 2;
-}
-.average span {
-    display: block;
-    font-size: 32px;
-    font-weight: bold;
-}
-.average small {
-    color: #b0bec5;
-}
-.result-item {
-    background: rgba(255,255,255,0.08);
-    padding: 15px;
-    margin: 12px 0;
-    border-radius: 12px;
+.bill-row {
     display: flex;
     justify-content: space-between;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
 }
-.result-item strong {
-    color: #00e5ff;
-}
-.grade {
-    font-size: 35px;
-    font-weight: bold;
-    color: #00e5ff;
-}
-.status {
-    font-size: 18px;
+.bill-row span:last-child {
     font-weight: bold;
 }
-.pass {
-    color: #69f0ae;
-}
-.fail {
-    color: #ff5252;
-}
-.progress-box {
-    margin-top: 20px;
-    text-align: left;
-}
-.progress-title {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 8px;
-}
-.progress {
-    width: 100%;
-    height: 12px;
-    background: rgba(255,255,255,0.15);
-    border-radius: 20px;
-    overflow: hidden;
-}
-.progress-bar {
-    width: 0%;
-    height: 100%;
-    background: linear-gradient(90deg, #00e5ff, #00ff87);
-    border-radius: 20px;
-    transition: width 1s ease;
-}
-.footer {
+.discount {
+    background: #ffca28;
+    color: #263238;
+    padding: 12px;
+    margin: 20px 0;
+    border-radius: 10px;
     text-align: center;
-    margin-top: 25px;
-    color: #b0bec5;
+    font-weight: bold;
+    display: none;
+}
+.final-bill {
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 15px;
+    background: rgba(255,255,255,0.12);
+    text-align: center;
+}
+.final-bill small {
+    display: block;
+    color: #c8e6c9;
+    margin-bottom: 5px;
+}
+.final-bill strong {
+    font-size: 32px;
+    color: #ffca28;
+}
+.message {
+    text-align: center;
+    margin-top: 15px;
+    color: #c8e6c9;
     font-size: 14px;
 }
-@keyframes float {
-    from {
-        transform: translate(0,0);
+footer {
+    margin-top: 50px;
+    background: #263238;
+    color: #cfd8dc;
+    text-align: center;
+    padding: 25px;
+}
+footer strong {
+    color: #ffca28;
+}
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
     }
-    to {
-        transform: translate(40px,50px);
+    50% {
+        transform: translateY(-8px);
     }
 }
-@media(max-width: 800px) {
-    .main-box {
-        grid-template-columns: 1fr;
-    }
-}
-@media(max-width: 500px) {
-    .subject-grid {
-        grid-template-columns: 1fr;
-    }
-    .header h1 {
-        font-size: 30px;
-    }
-    .buttons {
+@media (max-width: 800px) {
+    header {
         flex-direction: column;
+        gap: 8px;
+        text-align: center;
+    }
+    .billing-layout {
+        grid-template-columns: 1fr;
+    }
+    .summary {
+        position: static;
+    }
+}
+@media (max-width: 500px) {
+    .input-group {
+        grid-template-columns: 1fr;
+    }
+    .title h1 {
+        font-size: 28px;
+    }
+    .container {
+        width: 94%;
     }
 }
 </style>
 </head>
 <body>
 
+<header>
+    <div class="logo">🛒 Fresh<span>Mart</span></div>
+    <div class="tagline">Smart Shopping • Simple Billing</div>
+</header>
+
 <div class="container">
 
-    <div class="header">
-        <h1>🎓 Smart Grade Calculator</h1>
-        <p>Student Academic Performance Evaluation System</p>
+    <div class="title">
+        <h1>Supermarket Billing System</h1>
+        <p>Enter product details and generate your bill instantly</p>
     </div>
 
-    <div class="main-box">
+    <div class="billing-layout">
 
         <div class="card">
-            <h2>📝 Enter Subject Marks</h2>
+            <h2 class="card-title">🛍️ Product Details</h2>
 
-            <div class="subject-grid">
-
-                <div class="subject">
-                    <label>📘 Mathematics</label>
-                    <input type="number" id="math" min="0" max="100" placeholder="Enter marks">
+            <div class="product">
+                <div class="product-heading">
+                    <h3>🍎 Product 1</h3>
+                    <div class="product-number">1</div>
                 </div>
 
-                <div class="subject">
-                    <label>💻 Computer Science</label>
-                    <input type="number" id="computer" min="0" max="100" placeholder="Enter marks">
-                </div>
+                <div class="input-group">
+                    <div class="input-box">
+                        <label>Quantity</label>
+                        <input type="number" id="quantity1" min="0" placeholder="Enter quantity">
+                    </div>
 
-                <div class="subject">
-                    <label>🔬 Science</label>
-                    <input type="number" id="science" min="0" max="100" placeholder="Enter marks">
+                    <div class="input-box">
+                        <label>Unit Price (₹)</label>
+                        <input type="number" id="price1" min="0" placeholder="Enter price">
+                    </div>
                 </div>
-
-                <div class="subject">
-                    <label>📖 English</label>
-                    <input type="number" id="english" min="0" max="100" placeholder="Enter marks">
-                </div>
-
-                <div class="subject">
-                    <label>🌍 Social Science</label>
-                    <input type="number" id="social" min="0" max="100" placeholder="Enter marks">
-                </div>
-
             </div>
 
-            <div class="buttons">
-                <button class="calculate" onclick="calculateGrade()">Calculate Result</button>
-                <button class="reset" onclick="resetForm()">Reset</button>
+            <div class="product">
+                <div class="product-heading">
+                    <h3>🥛 Product 2</h3>
+                    <div class="product-number">2</div>
+                </div>
+
+                <div class="input-group">
+                    <div class="input-box">
+                        <label>Quantity</label>
+                        <input type="number" id="quantity2" min="0" placeholder="Enter quantity">
+                    </div>
+
+                    <div class="input-box">
+                        <label>Unit Price (₹)</label>
+                        <input type="number" id="price2" min="0" placeholder="Enter price">
+                    </div>
+                </div>
             </div>
+
+            <div class="product">
+                <div class="product-heading">
+                    <h3>🍞 Product 3</h3>
+                    <div class="product-number">3</div>
+                </div>
+
+                <div class="input-group">
+                    <div class="input-box">
+                        <label>Quantity</label>
+                        <input type="number" id="quantity3" min="0" placeholder="Enter quantity">
+                    </div>
+
+                    <div class="input-box">
+                        <label>Unit Price (₹)</label>
+                        <input type="number" id="price3" min="0" placeholder="Enter price">
+                    </div>
+                </div>
+            </div>
+
+            <button class="calculate-btn" onclick="generateBill()">
+                🧾 Generate Bill
+            </button>
+
+            <button class="reset-btn" onclick="resetBill()">
+                ↻ Clear All
+            </button>
         </div>
 
-        <div class="card result-card">
-            <h2>📊 Result Summary</h2>
+        <div class="summary">
 
-            <div class="result-circle" id="resultCircle">
-                <div class="average">
-                    <span id="average">0</span>
-                    <small>Average</small>
-                </div>
+            <div class="bill-icon">🧾</div>
+
+            <h2>Bill Summary</h2>
+
+            <div class="bill-row">
+                <span>Product 1</span>
+                <span id="amount1">₹0.00</span>
             </div>
 
-            <div class="result-item">
-                <span>Total Marks</span>
-                <strong id="total">0 / 500</strong>
+            <div class="bill-row">
+                <span>Product 2</span>
+                <span id="amount2">₹0.00</span>
             </div>
 
-            <div class="result-item">
-                <span>Average</span>
-                <strong id="averageText">0%</strong>
+            <div class="bill-row">
+                <span>Product 3</span>
+                <span id="amount3">₹0.00</span>
             </div>
 
-            <div class="result-item">
-                <span>Grade</span>
-                <span class="grade" id="grade">-</span>
+            <div class="bill-row">
+                <span>Total Amount</span>
+                <span id="total">₹0.00</span>
             </div>
 
-            <div class="result-item">
-                <span>Status</span>
-                <span class="status" id="status">-</span>
+            <div class="discount" id="discount">
+                🎉 10% Discount Applied!
             </div>
 
-            <div class="progress-box">
-                <div class="progress-title">
-                    <span>Performance</span>
-                    <span id="percentage">0%</span>
-                </div>
-                <div class="progress">
-                    <div class="progress-bar" id="progressBar"></div>
-                </div>
+            <div class="bill-row">
+                <span>Discount</span>
+                <span id="discountAmount">₹0.00</span>
             </div>
+
+            <div class="final-bill">
+                <small>Final Payable Amount</small>
+                <strong id="finalAmount">₹0.00</strong>
+            </div>
+
+            <p class="message" id="message">
+                Add products to generate your bill.
+            </p>
 
         </div>
 
     </div>
-
-    <div class="footer">
-        © 2026 Smart Grade Calculator | HTML5 + CSS3 + JavaScript
-    </div>
-
 </div>
 
+<footer>
+    <p>© 2026 <strong>FreshMart</strong> | Smart Supermarket Billing System</p>
+</footer>
+
 <script>
-function calculateGrade() {
+function generateBill() {
 
-    let math = Number(document.getElementById("math").value);
-    let computer = Number(document.getElementById("computer").value);
-    let science = Number(document.getElementById("science").value);
-    let english = Number(document.getElementById("english").value);
-    let social = Number(document.getElementById("social").value);
+    let quantity1 = Number(document.getElementById("quantity1").value);
+    let price1 = Number(document.getElementById("price1").value);
 
-    let marks = [math, computer, science, english, social];
+    let quantity2 = Number(document.getElementById("quantity2").value);
+    let price2 = Number(document.getElementById("price2").value);
 
-    for (let i = 0; i < marks.length; i++) {
-        if (marks[i] < 0 || marks[i] > 100 || isNaN(marks[i])) {
-            alert("Please enter valid marks between 0 and 100 for all subjects.");
-            return;
-        }
+    let quantity3 = Number(document.getElementById("quantity3").value);
+    let price3 = Number(document.getElementById("price3").value);
+
+    if (
+        quantity1 < 0 || price1 < 0 ||
+        quantity2 < 0 || price2 < 0 ||
+        quantity3 < 0 || price3 < 0
+    ) {
+        alert("Please enter valid positive values.");
+        return;
     }
 
-    let total = math + computer + science + english + social;
-    let average = total / 5;
-    let grade;
-    let status;
+    let amount1 = quantity1 * price1;
+    let amount2 = quantity2 * price2;
+    let amount3 = quantity3 * price3;
 
-    if (average >= 90) {
-        grade = "A+";
-    } else if (average >= 80) {
-        grade = "A";
-    } else if (average >= 70) {
-        grade = "B";
-    } else if (average >= 60) {
-        grade = "C";
-    } else if (average >= 50) {
-        grade = "D";
-    } else {
-        grade = "F";
+    let total = amount1 + amount2 + amount3;
+    let discount = 0;
+
+    if (total > 2000) {
+        discount = total * 0.10;
     }
 
-    if (marks.some(mark => mark < 35)) {
-        status = "FAIL";
+    let finalAmount = total - discount;
+
+    document.getElementById("amount1").textContent =
+        "₹" + amount1.toFixed(2);
+
+    document.getElementById("amount2").textContent =
+        "₹" + amount2.toFixed(2);
+
+    document.getElementById("amount3").textContent =
+        "₹" + amount3.toFixed(2);
+
+    document.getElementById("total").textContent =
+        "₹" + total.toFixed(2);
+
+    document.getElementById("discountAmount").textContent =
+        "₹" + discount.toFixed(2);
+
+    document.getElementById("finalAmount").textContent =
+        "₹" + finalAmount.toFixed(2);
+
+    if (discount > 0) {
+        document.getElementById("discount").style.display = "block";
+        document.getElementById("message").textContent =
+            "Congratulations! You saved ₹" + discount.toFixed(2);
     } else {
-        status = "PASS";
-    }
-
-    document.getElementById("total").textContent = total + " / 500";
-    document.getElementById("average").textContent = average.toFixed(1);
-    document.getElementById("averageText").textContent = average.toFixed(1) + "%";
-    document.getElementById("grade").textContent = grade;
-    document.getElementById("status").textContent = status;
-    document.getElementById("percentage").textContent = average.toFixed(1) + "%";
-
-    document.getElementById("progressBar").style.width = average + "%";
-
-    let degree = average * 3.6;
-    document.getElementById("resultCircle").style.background =
-        "conic-gradient(#00e5ff " + degree + "deg, rgba(255,255,255,0.1) " + degree + "deg)";
-
-    if (status === "PASS") {
-        document.getElementById("status").className = "status pass";
-    } else {
-        document.getElementById("status").className = "status fail";
+        document.getElementById("discount").style.display = "none";
+        document.getElementById("message").textContent =
+            "Add more products to unlock a 10% discount above ₹2000.";
     }
 }
 
-function resetForm() {
+function resetBill() {
 
-    document.getElementById("math").value = "";
-    document.getElementById("computer").value = "";
-    document.getElementById("science").value = "";
-    document.getElementById("english").value = "";
-    document.getElementById("social").value = "";
+    document.getElementById("quantity1").value = "";
+    document.getElementById("price1").value = "";
 
-    document.getElementById("total").textContent = "0 / 500";
-    document.getElementById("average").textContent = "0";
-    document.getElementById("averageText").textContent = "0%";
-    document.getElementById("grade").textContent = "-";
-    document.getElementById("status").textContent = "-";
-    document.getElementById("percentage").textContent = "0%";
+    document.getElementById("quantity2").value = "";
+    document.getElementById("price2").value = "";
 
-    document.getElementById("progressBar").style.width = "0%";
+    document.getElementById("quantity3").value = "";
+    document.getElementById("price3").value = "";
 
-    document.getElementById("resultCircle").style.background =
-        "conic-gradient(#00e5ff 0deg, rgba(255,255,255,0.1) 0deg)";
+    document.getElementById("amount1").textContent = "₹0.00";
+    document.getElementById("amount2").textContent = "₹0.00";
+    document.getElementById("amount3").textContent = "₹0.00";
+    document.getElementById("total").textContent = "₹0.00";
+    document.getElementById("discountAmount").textContent = "₹0.00";
+    document.getElementById("finalAmount").textContent = "₹0.00";
+
+    document.getElementById("discount").style.display = "none";
+
+    document.getElementById("message").textContent =
+        "Add products to generate your bill.";
 }
 </script>
 
