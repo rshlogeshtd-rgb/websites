@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smart Student Grade Calculator</title>
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #141e30, #243b55);
+    color: #fff;
+    overflow-x: hidden;
+}
+body::before {
+    content: "";
+    position: fixed;
+    width: 350px;
+    height: 350px;
+    background: #00e5ff;
+    border-radius: 50%;
+    filter: blur(100px);
+    opacity: 0.25;
+    top: -100px;
+    left: -100px;
+    animation: float 6s infinite alternate;
+}
+body::after {
+    content: "";
+    position: fixed;
+    width: 300px;
+    height: 300px;
+    background: #ff00cc;
+    border-radius: 50%;
+    filter: blur(100px);
+    opacity: 0.2;
+    bottom: -100px;
+    right: -80px;
+    animation: float 7s infinite alternate-reverse;
+}
+.container {
+    width: 92%;
+    max-width: 1100px;
+    margin: 40px auto;
+    position: relative;
+    z-index: 1;
+}
+.header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+.header h1 {
+    font-size: 42px;
+    letter-spacing: 2px;
+    text-shadow: 0 5px 15px rgba(0,0,0,0.4);
+}
+.header p {
+    margin-top: 8px;
+    color: #cfd8dc;
+    font-size: 17px;
+}
+.main-box {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 25px;
+}
+.card {
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 25px;
+    padding: 30px;
+    backdrop-filter: blur(15px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+}
+.card h2 {
+    margin-bottom: 25px;
+    font-size: 25px;
+}
+.subject-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+}
+.subject {
+    position: relative;
+}
+.subject label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #e0f7fa;
+}
+.subject input {
+    width: 100%;
+    padding: 14px;
+    border: 2px solid transparent;
+    border-radius: 12px;
+    outline: none;
+    background: rgba(255,255,255,0.9);
+    color: #222;
+    font-size: 16px;
+    transition: 0.3s;
+}
+.subject input:focus {
+    border-color: #00e5ff;
+    box-shadow: 0 0 15px rgba(0,229,255,0.4);
+    transform: translateY(-2px);
+}
+.buttons {
+    display: flex;
+    gap: 15px;
+    margin-top: 25px;
+}
+button {
+    flex: 1;
+    padding: 14px;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.calculate {
+    background: linear-gradient(135deg, #00c6ff, #0072ff);
+    color: white;
+}
+.reset {
+    background: rgba(255,255,255,0.15);
+    color: white;
+    border: 1px solid rgba(255,255,255,0.3);
+}
+button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+}
+.result-card {
+    text-align: center;
+}
+.result-circle {
+    width: 150px;
+    height: 150px;
+    margin: 10px auto 25px;
+    border-radius: 50%;
+    background: conic-gradient(#00e5ff 0deg, rgba(255,255,255,0.1) 0deg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+.result-circle::before {
+    content: "";
+    position: absolute;
+    width: 120px;
+    height: 120px;
+    background: #1d3048;
+    border-radius: 50%;
+}
+.average {
+    position: relative;
+    z-index: 2;
+}
+.average span {
+    display: block;
+    font-size: 32px;
+    font-weight: bold;
+}
+.average small {
+    color: #b0bec5;
+}
+.result-item {
+    background: rgba(255,255,255,0.08);
+    padding: 15px;
+    margin: 12px 0;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+}
+.result-item strong {
+    color: #00e5ff;
+}
+.grade {
+    font-size: 35px;
+    font-weight: bold;
+    color: #00e5ff;
+}
+.status {
+    font-size: 18px;
+    font-weight: bold;
+}
+.pass {
+    color: #69f0ae;
+}
+.fail {
+    color: #ff5252;
+}
+.progress-box {
+    margin-top: 20px;
+    text-align: left;
+}
+.progress-title {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+.progress {
+    width: 100%;
+    height: 12px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 20px;
+    overflow: hidden;
+}
+.progress-bar {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg, #00e5ff, #00ff87);
+    border-radius: 20px;
+    transition: width 1s ease;
+}
+.footer {
+    text-align: center;
+    margin-top: 25px;
+    color: #b0bec5;
+    font-size: 14px;
+}
+@keyframes float {
+    from {
+        transform: translate(0,0);
+    }
+    to {
+        transform: translate(40px,50px);
+    }
+}
+@media(max-width: 800px) {
+    .main-box {
+        grid-template-columns: 1fr;
+    }
+}
+@media(max-width: 500px) {
+    .subject-grid {
+        grid-template-columns: 1fr;
+    }
+    .header h1 {
+        font-size: 30px;
+    }
+    .buttons {
+        flex-direction: column;
+    }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+    <div class="header">
+        <h1>🎓 Smart Grade Calculator</h1>
+        <p>Student Academic Performance Evaluation System</p>
+    </div>
+
+    <div class="main-box">
+
+        <div class="card">
+            <h2>📝 Enter Subject Marks</h2>
+
+            <div class="subject-grid">
+
+                <div class="subject">
+                    <label>📘 Mathematics</label>
+                    <input type="number" id="math" min="0" max="100" placeholder="Enter marks">
+                </div>
+
+                <div class="subject">
+                    <label>💻 Computer Science</label>
+                    <input type="number" id="computer" min="0" max="100" placeholder="Enter marks">
+                </div>
+
+                <div class="subject">
+                    <label>🔬 Science</label>
+                    <input type="number" id="science" min="0" max="100" placeholder="Enter marks">
+                </div>
+
+                <div class="subject">
+                    <label>📖 English</label>
+                    <input type="number" id="english" min="0" max="100" placeholder="Enter marks">
+                </div>
+
+                <div class="subject">
+                    <label>🌍 Social Science</label>
+                    <input type="number" id="social" min="0" max="100" placeholder="Enter marks">
+                </div>
+
+            </div>
+
+            <div class="buttons">
+                <button class="calculate" onclick="calculateGrade()">Calculate Result</button>
+                <button class="reset" onclick="resetForm()">Reset</button>
+            </div>
+        </div>
+
+        <div class="card result-card">
+            <h2>📊 Result Summary</h2>
+
+            <div class="result-circle" id="resultCircle">
+                <div class="average">
+                    <span id="average">0</span>
+                    <small>Average</small>
+                </div>
+            </div>
+
+            <div class="result-item">
+                <span>Total Marks</span>
+                <strong id="total">0 / 500</strong>
+            </div>
+
+            <div class="result-item">
+                <span>Average</span>
+                <strong id="averageText">0%</strong>
+            </div>
+
+            <div class="result-item">
+                <span>Grade</span>
+                <span class="grade" id="grade">-</span>
+            </div>
+
+            <div class="result-item">
+                <span>Status</span>
+                <span class="status" id="status">-</span>
+            </div>
+
+            <div class="progress-box">
+                <div class="progress-title">
+                    <span>Performance</span>
+                    <span id="percentage">0%</span>
+                </div>
+                <div class="progress">
+                    <div class="progress-bar" id="progressBar"></div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="footer">
+        © 2026 Smart Grade Calculator | HTML5 + CSS3 + JavaScript
+    </div>
+
+</div>
+
+<script>
+function calculateGrade() {
+
+    let math = Number(document.getElementById("math").value);
+    let computer = Number(document.getElementById("computer").value);
+    let science = Number(document.getElementById("science").value);
+    let english = Number(document.getElementById("english").value);
+    let social = Number(document.getElementById("social").value);
+
+    let marks = [math, computer, science, english, social];
+
+    for (let i = 0; i < marks.length; i++) {
+        if (marks[i] < 0 || marks[i] > 100 || isNaN(marks[i])) {
+            alert("Please enter valid marks between 0 and 100 for all subjects.");
+            return;
+        }
+    }
+
+    let total = math + computer + science + english + social;
+    let average = total / 5;
+    let grade;
+    let status;
+
+    if (average >= 90) {
+        grade = "A+";
+    } else if (average >= 80) {
+        grade = "A";
+    } else if (average >= 70) {
+        grade = "B";
+    } else if (average >= 60) {
+        grade = "C";
+    } else if (average >= 50) {
+        grade = "D";
+    } else {
+        grade = "F";
+    }
+
+    if (marks.some(mark => mark < 35)) {
+        status = "FAIL";
+    } else {
+        status = "PASS";
+    }
+
+    document.getElementById("total").textContent = total + " / 500";
+    document.getElementById("average").textContent = average.toFixed(1);
+    document.getElementById("averageText").textContent = average.toFixed(1) + "%";
+    document.getElementById("grade").textContent = grade;
+    document.getElementById("status").textContent = status;
+    document.getElementById("percentage").textContent = average.toFixed(1) + "%";
+
+    document.getElementById("progressBar").style.width = average + "%";
+
+    let degree = average * 3.6;
+    document.getElementById("resultCircle").style.background =
+        "conic-gradient(#00e5ff " + degree + "deg, rgba(255,255,255,0.1) " + degree + "deg)";
+
+    if (status === "PASS") {
+        document.getElementById("status").className = "status pass";
+    } else {
+        document.getElementById("status").className = "status fail";
+    }
+}
+
+function resetForm() {
+
+    document.getElementById("math").value = "";
+    document.getElementById("computer").value = "";
+    document.getElementById("science").value = "";
+    document.getElementById("english").value = "";
+    document.getElementById("social").value = "";
+
+    document.getElementById("total").textContent = "0 / 500";
+    document.getElementById("average").textContent = "0";
+    document.getElementById("averageText").textContent = "0%";
+    document.getElementById("grade").textContent = "-";
+    document.getElementById("status").textContent = "-";
+    document.getElementById("percentage").textContent = "0%";
+
+    document.getElementById("progressBar").style.width = "0%";
+
+    document.getElementById("resultCircle").style.background =
+        "conic-gradient(#00e5ff 0deg, rgba(255,255,255,0.1) 0deg)";
+}
+</script>
+
+</body>
+</html>
